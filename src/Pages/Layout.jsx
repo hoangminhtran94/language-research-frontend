@@ -1,12 +1,14 @@
 import { Outlet } from "react-router";
 import Navbar from "../components/NavBar";
-
+import "../App.css";
 const Layout = () => {
   return (
-    <main className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3">
       <Navbar />
-      <Outlet />
-    </main>
+      <main className="container mx-auto flex flex-col gap-3">
+        <Outlet />
+      </main>
+    </div>
   );
 };
 
