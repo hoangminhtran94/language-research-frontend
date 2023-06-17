@@ -5,31 +5,11 @@ const MainPage = () => {
   return (
     <div className="flex flex-col gap-3">
       <div className="flex  justify-between">
-        <div className="flex gap-3">
-          <Link
-            className="rounded border-green-600 text-green-600 border p-4 hover:scale-105 transition-all"
-            to="/new"
-          >
-            New Report
-          </Link>
-          <Link
-            className="rounded border-yellow-500 text-yellow-500 border p-4 hover:scale-105 transition-all"
-            to="/view-new-report"
-          >
-            View new reports
-          </Link>
-          <Link
-            className="rounded border-indigo-300 text-indigo-200 border p-4 hover:scale-105 transition-all"
-            to="/"
-          >
-            Reload
-          </Link>
-        </div>
         <Pagination listLength={recordLength} />
       </div>
       <div className="">
-        <ul className="text-sm border-slate-100 border  ">
-          <li className="grid grid-cols-17 bg-black text-white  font-bold p-2 ">
+        <ul className="text-sm border-slate-100 border max-h-[800px] overflow-y-scroll">
+          <li className="grid grid-cols-17 bg-black text-white sticky top-0  font-bold p-2 ">
             <span>Ref date</span>
             <span>GEO</span>
             <span>DGUID</span>

@@ -11,12 +11,14 @@ import {
 } from "react-router-dom";
 import Layout from "./Pages/Layout";
 import MainPage from "./Pages/MainPage";
+import NewRecord from "./Pages/NewRecord";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="/" element={<MainPage />} loader={mainPageLoader} />
+      <Route path="/new-record" element={<NewRecord />} />
     </Route>
   )
 );

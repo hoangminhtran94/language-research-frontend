@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-const Pagination = ({ listLength }) => {
+import { v4 } from "uuid";
+const Pagination = ({ listLength, reload }) => {
   let [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(
     +searchParams.get("page") ? +searchParams.get("page") - 1 : 0
   );
   const numberOfPage = Math.ceil(+listLength / 100);
+
+  useEffect(() => {
+    if (searchParams.get("page") === "1" || !searchParams.get("page")) {
+      setCurrentPage(0);
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     setSearchParams((params) => {
       params.set("page", (currentPage + 1).toString());
       return params;
     });
   }, [currentPage, setSearchParams]);
+
   return (
-    <div className="flex items-center gap-5">
-      <p className="font-bold">
+    <div className="flex items-center gap-5 flex-1">
+      <p className="font-bold flex-1 text-center">
         {`Current display records from ${currentPage * 100 + 1} to
-        ${currentPage * 100 + 100} in ${listLength} records`}
+        ${
+          currentPage === numberOfPage - 1
+            ? currentPage * 100 + (listLength - currentPage * 100)
+            : currentPage * 100 + 100
+        } in ${listLength} records`}
       </p>
-      <div className="flex gap-2 items-center w-[300px] justify-between">
+      <div className="flex gap-2 items-center min-w-[300px] justify-between">
         <button
           className="hover:scale-110 transition-all"
           onClick={() => {
@@ -34,6 +46,7 @@ const Pagination = ({ listLength }) => {
           Previous
         </button>
         <ul className="flex gap-2">
+          {currentPage >= 4 && <li>...</li>}
           {Array(numberOfPage)
             .fill()
             .map((_, index) => {
@@ -43,17 +56,18 @@ const Pagination = ({ listLength }) => {
                     onClick={() => {
                       setCurrentPage(index);
                     }}
-                    className={`${
-                      currentPage === index && "font-bold"
+                    className={`opacity-50 ${
+                      currentPage === index &&
+                      "font-bold scale-105 -translate-y-1 !opacity-100"
                     } cursor-pointer hover:scale-110 transition-all`}
-                    key={index}
+                    key={v4()}
                   >
                     {index + 1}
                   </li>
                 );
               }
-              return <></>;
             })}
+          {numberOfPage - currentPage > 4 && <li>...</li>}
         </ul>
         <button
           className="hover:scale-110 transition-all"
