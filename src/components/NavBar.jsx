@@ -1,4 +1,9 @@
 import { NavLink } from "react-router-dom";
+/**
+ * Renders the Navbar component.
+ * @author Minh Hoang Tran - 041016957
+ * @component
+ */
 const Navbar = () => {
   return (
     <header className=" bg-black text-white">

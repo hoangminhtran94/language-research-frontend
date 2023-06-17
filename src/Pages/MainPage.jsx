@@ -1,74 +1,43 @@
-import { Link, useLoaderData, useFetcher } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Pagination from "../components/Pagination";
+import RecordTable from "../components/RecordTable";
 const MainPage = () => {
+  /**
+   * @author Minh Hoang Tran - 041016957
+   * Retrieves the records and recordLength data using a useLoaderData.
+   */
   const { records, recordLength } = useLoaderData();
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex  justify-between">
-        <Pagination listLength={recordLength} />
-      </div>
-      <div className="">
-        <ul className="text-sm border-slate-100 border max-h-[800px] overflow-y-scroll">
-          <li className="grid grid-cols-17 bg-black text-white sticky top-0  font-bold p-2 ">
-            <span>Ref date</span>
-            <span>GEO</span>
-            <span>DGUID</span>
-            <span>Type of product</span>
-            <span>Type of storage</span>
-            <span>UOM</span>
-            <span>UOM ID</span>
-            <span>Scalar Factor</span>
-            <span>Scalar ID</span>
-            <span>Vector</span>
-            <span>Coordinate</span>
-            <span>Value</span>
-            <span>Status</span>
-            <span>Symbol</span>
-            <span>Terminated</span>
-            <span>Decimals</span>
-            <span></span>
-          </li>
-          {records.slice(0, 100).map((record, index) => (
-            <li className="grid grid-cols-17 odd:bg-slate-50  p-2 " key={index}>
-              <span>{record.REF_DATE}</span>
-              <span>{record.GEO}</span>
-              <span>{record.DGUID}</span>
-              <span>{record.type_of_product}</span>
-              <span>{record.type_of_storage}</span>
-              <span>{record.UOM}</span>
-              <span>{record.UOM_ID}</span>
-              <span>{record.SCALAR_FACTOR}</span>
-              <span>{record.SCALAR_ID}</span>
-              <span>{record.VECTOR}</span>
-              <span>{record.COORDINATE}</span>
-              <span>{record.VALUE}</span>
-              <span>{record.STATUS}</span>
-              <span>{record.SYMBOL}</span>
-              <span>{record.TERMINATED}</span>
-              <span>{record.DECIMALS}</span>
-              <span className="flex flex-col">
-                <button>Edit</button>
-                <button>Delete</button>
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {recordLength > 0 && <Pagination listLength={recordLength} />}
+      <RecordTable records={records} />
     </div>
   );
 };
 export default MainPage;
 
+/**
+ * Loader function that retrieves data for the MainPage component.
+ * @author Minh Hoang Tran - 041016957
+ * @async
+ * @param {Object} request - The request object containing the URL.
+ * @returns {Array} - An array of data retrieved from the API.
+ */
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
-  let page = url.searchParams.get("page") ?? "1";
+  const page = url.searchParams.get("page") ?? "1";
   let res;
 
   try {
+    // Fetches data from the API based based on the page url when the page first loaded
     res = await fetch("http://localhost:3600/api/vegetable?page=" + page);
   } catch (error) {
-    return [];
+    // Returns an empty array if an error occurs during the fetch
+    return { records: [], recordLength: 0 };
   }
+  // Parses the response into JSON format
   const data = await res.json();
+  console.log(data);
+  // Returns the retrieved data
   return data;
 };
