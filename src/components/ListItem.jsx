@@ -25,9 +25,10 @@ const ListItem = ({ record }) => {
     const redirectPath = `/${page ? "?page=" + page : ""}`;
     return navigate(redirectPath);
   };
+
   return (
     <li className="grid grid-cols-17 odd:bg-slate-50 items-center  p-2 ">
-      <span>{record.REF_DATE}</span>
+      <span> {record.REF_DATE}</span>
       <span>{record.GEO}</span>
       <span>{record.DGUID}</span>
       <span>{record.type_of_product}</span>

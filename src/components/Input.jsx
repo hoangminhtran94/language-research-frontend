@@ -9,9 +9,11 @@
 const Input = ({ label, ...otherProps }) => {
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={otherProps.name} className="font-bold">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={otherProps.name} className="font-bold">
+          {label}
+        </label>
+      )}
       <input
         id={otherProps.name}
         {...otherProps}

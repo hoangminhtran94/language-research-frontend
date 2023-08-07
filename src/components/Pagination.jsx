@@ -28,7 +28,7 @@ const Pagination = ({ listLength, reload }) => {
       params.set("page", (currentPage + 1).toString());
       return params;
     });
-  }, [currentPage, setSearchParams]);
+  }, [currentPage]);
 
   return (
     <div className="flex items-center gap-5 flex-1">

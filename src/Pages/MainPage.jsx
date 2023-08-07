@@ -26,18 +26,24 @@ export default MainPage;
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
   const page = url.searchParams.get("page") ?? "1";
+  //Get the search params from the url and forward it to the server
+  const searchValue = url.searchParams.get("search");
+
   let res;
 
   try {
     // Fetches data from the API based based on the page url when the page first loaded
-    res = await fetch("http://localhost:3600/api/vegetable?page=" + page);
+    res = await fetch(
+      `http://localhost:3600/api/vegetable?page=${page}${
+        searchValue ? `&search=${searchValue}` : ""
+      }`
+    );
   } catch (error) {
     // Returns an empty array if an error occurs during the fetch
     return { records: [], recordLength: 0 };
   }
   // Parses the response into JSON format
   const data = await res.json();
-  console.log(data);
   // Returns the retrieved data
   return data;
 };
