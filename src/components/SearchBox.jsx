@@ -12,9 +12,12 @@ const SearchBox = () => {
   const [input, setInput] = useState("");
   /**
    * Handles the search action by updating the search parameters.
+   * @author Minh Hoang Tran - 041016957
    */
   const searchHandler = () => {
+    //Encode the input to transform all special characters to URI
     const encodedInput = encodeURIComponent(input);
+    //Add the search input to the url
     setSearchParams((params) => {
       params.set("search", encodedInput);
       return params;

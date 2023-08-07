@@ -25,6 +25,7 @@ export default MainPage;
  */
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
+  //Get the page number from search params
   const page = url.searchParams.get("page") ?? "1";
   //Get the search params from the url and forward it to the server
   const searchValue = url.searchParams.get("search");
